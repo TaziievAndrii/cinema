@@ -20,7 +20,12 @@ import {
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { TOP_LISTS } from '../../../constants';
+import { iconComponents, TOP_LISTS } from '../../../constants';
+
+const Icon = ({ iconName }) => {
+  const IconComponent = iconComponents[iconName];
+  return <IconComponent />;
+};
 
 export default function Navbar() {
   const [isOpen, setOpen] = useState(false);
@@ -37,7 +42,7 @@ export default function Navbar() {
     <Slide appear={false} direction="down" in={!trigger}>
       <AppBar>
         <Container maxWidth="lg">
-          <Toolbar>
+          <Toolbar disableGutters>
             <IconButton color="inherit" onClick={handleDrawerToggle}>
               <MenuIcon />
             </IconButton>
@@ -49,6 +54,7 @@ export default function Navbar() {
                       <ListItem disablePadding>
                         <ListItemButton>
                           <ListItemIcon>
+                            <Icon iconName={item.icon} />
                             <MovieIcon />
                           </ListItemIcon>
                           <ListItemText primary={item.title} />
