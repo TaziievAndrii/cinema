@@ -4,6 +4,7 @@ import {
   AppBar,
   Box,
   Container,
+  Divider,
   Drawer,
   IconButton,
   Link,
@@ -20,7 +21,12 @@ import {
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { TOP_LISTS } from '../../../constants';
+import { iconComponents, MOVIE_LISTS, TOP_LISTS } from '../../../constants';
+
+const Icon = ({ iconName }) => {
+  const IconComponent = iconComponents[iconName];
+  return <IconComponent />;
+};
 
 export default function Navbar() {
   const [isOpen, setOpen] = useState(false);
@@ -37,25 +43,40 @@ export default function Navbar() {
     <Slide appear={false} direction="down" in={!trigger}>
       <AppBar>
         <Container maxWidth="lg">
-          <Toolbar>
+          <Toolbar disableGutters>
             <IconButton color="inherit" onClick={handleDrawerToggle}>
               <MenuIcon />
             </IconButton>
             <Drawer open={isOpen} onClose={handleDrawerToggle}>
               <Box sx={{ width: 250 }} onClick={handleDrawerToggle}>
                 <List>
-                  {TOP_LISTS.map(item => {
+                  {TOP_LISTS.map(item => (
                     <Link key={item.title} component={RouterLink} to={item.url}>
                       <ListItem disablePadding>
                         <ListItemButton>
                           <ListItemIcon>
-                            <MovieIcon />
+                            <Icon iconName={item.icon} />
                           </ListItemIcon>
                           <ListItemText primary={item.title} />
                         </ListItemButton>
                       </ListItem>
-                    </Link>;
-                  })}
+                    </Link>
+                  ))}
+                </List>
+                <Divider />
+                <List>
+                  {MOVIE_LISTS.map(item => (
+                    <Link key={item.title} component={RouterLink} to={item.url}>
+                      <ListItem disablePadding>
+                        <ListItemButton>
+                          <ListItemIcon>
+                            <Icon iconName={item.icon} />
+                          </ListItemIcon>
+                          <ListItemText primary={item.title} />
+                        </ListItemButton>
+                      </ListItem>
+                    </Link>
+                  ))}
                 </List>
               </Box>
             </Drawer>
