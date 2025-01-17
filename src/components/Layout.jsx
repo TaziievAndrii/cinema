@@ -7,8 +7,11 @@ import Navbar from './ui/Navbar';
 
 export default function Layout() {
   return (
-    <Container fixed>
-      <Box sx={{ p: 4 }} />
+    <Container
+      fixed
+      sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+    >
+      <Box sx={{ p: 5 }} />
       <Navbar />
       <Outlet />
       <Footer />
