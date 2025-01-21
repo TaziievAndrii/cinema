@@ -1,6 +1,7 @@
+import { ArrowBack } from '@mui/icons-material';
 import { Button, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TOP_LISTS } from '../../../constants';
 import { useGetFilmsTopQuery } from '../../../services/kinopoiskApi';
@@ -9,7 +10,7 @@ import MoviesList from '../../ui/MoviesList';
 export default function MoviesListTop() {
   const location = useLocation();
   const [page, setPage] = useState(1);
-
+  const navigate = useNavigate();
   const movieType = TOP_LISTS.find(el => el.url === location.pathname);
 
   const { data, error, isLoading } = useGetFilmsTopQuery({
@@ -17,14 +18,18 @@ export default function MoviesListTop() {
     page,
   });
 
+  useEffect(() => {
+    setPage(1);
+  }, [location]);
+
   if (error) return <p>Some error</p>;
   if (isLoading) return <p>Loading...</p>;
 
   return (
     <>
-      <Stack flexDirection="row">
-        <Button>Back</Button>
-        <Typography>{movieType.title}</Typography>
+      <Stack flexDirection="row" sx={{ mt: 2, mb: 2 }}>
+        <Button startIcon={<ArrowBack />} onClick={() => navigate(-1)} />
+        <Typography variant="h4">{movieType.title}</Typography>
       </Stack>
       <MoviesList
         movies={data.items}
