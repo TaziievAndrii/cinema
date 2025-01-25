@@ -1,11 +1,19 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { TOP_LISTS } from '../constants';
-import { useGetFilmsTopQuery,useGetFilmsQuery } from '../services/kinopoiskApi';
+import {
+  useGetFilmsQuery,
+  useGetFilmsTopQuery,
+} from '../services/kinopoiskApi';
 
 export default function useMoviesQuery() {
-  const { page } = useSelector(state => state.currentQuerySlice);
+  const {
+    countries = '',
+    order = 'NUM_VOTE',
+    year = '',
+    page = 1,
+  } = useSelector(state => state.currentQuerySlice || {});
+
   const responsePopular = useGetFilmsTopQuery({
     type: TOP_LISTS[0].value,
     page,
@@ -17,36 +25,53 @@ export default function useMoviesQuery() {
   });
 
   const responseFilms = useGetFilmsQuery({
-    
+    type: 'FILM',
+    countries,
+    genreId: '1',
+    order,
+    year,
+    page,
   });
 
-  const responseSerial;
+  const responseSerials = useGetFilmsQuery({
+    type: 'TV_SERIES',
+    countries,
+    genreId: '1',
+    order,
+    year,
+    page,
+  });
 
-  const responseCartoons;
-  
-    const isLoading = 
-    responsePopular.isFetching || 
-    responseBest.isFetching || 
-    responseFilms.isFetching || 
-    responseSerial.isFetching || 
+  const responseCartoons = useGetFilmsQuery({
+    type: 'FILM',
+    countries,
+    genreId: '18',
+    order,
+    year,
+    page,
+  });
+
+  const isLoading =
+    responsePopular.isFetching ||
+    responseBest.isFetching ||
+    responseFilms.isFetching ||
+    responseSerials.isFetching ||
     responseCartoons.isFetching;
-  
-    const hasError = 
-    responsePopular.error || 
-    responseBest.error || 
-    responseFilms.error || 
-    responseSerial.error || 
+
+  const hasError =
+    responsePopular.error ||
+    responseBest.error ||
+    responseFilms.error ||
+    responseSerials.error ||
     responseCartoons.error;
-  
-  
-  
+
   return {
-    hasError,
     isLoading,
+    hasError,
     responsePopular,
     responseBest,
     responseFilms,
-    responseSerial,
-    responseCartoons
+    responseSerials,
+    responseCartoons,
   };
 }
