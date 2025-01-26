@@ -17,7 +17,6 @@ export default function Movies() {
     responseSerials,
     responseCartoons,
   } = useMoviesQuery();
-  console.log('responsePopular', responsePopular);
 
   if (isLoading) return <MoviesSkeleton />;
 
