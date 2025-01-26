@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './components/App';
 
+import 'bear-react-carousel/dist/index.css';
+
 const root = document.getElementById('root');
 
 ReactDOM.createRoot(root).render(
