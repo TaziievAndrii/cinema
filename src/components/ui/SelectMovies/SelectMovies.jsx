@@ -9,6 +9,9 @@ import {
   Stack,
 } from '@mui/material';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { resetQuery, selectQuery } from '../../../features/currentQuerySlice';
 
 export default function SelectMovies({
   countries,
@@ -18,6 +21,8 @@ export default function SelectMovies({
   countriesList,
   genresList,
 }) {
+  const dispatch = useDispatch();
+
   const ordersList = [
     { title: 'Sort by rating', value: 'RATING' },
     { title: 'Sort by scores ', value: 'NUM_VOTE' },
@@ -34,7 +39,12 @@ export default function SelectMovies({
     >
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Sorting</InputLabel>
-        <Select>
+        <Select
+          value={order}
+          onChange={e => {
+            dispatch(selectQuery({ order: e.target.value }));
+          }}
+        >
           {ordersList.map(order => (
             <MenuItem key={order.value} value={order.value}>
               {order.title}
@@ -44,7 +54,12 @@ export default function SelectMovies({
       </FormControl>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Country</InputLabel>
-        <Select>
+        <Select
+          value={countries}
+          onChange={e => {
+            dispatch(selectQuery({ countries: e.target.value }));
+          }}
+        >
           {countriesList.map(country => (
             <MenuItem key={country.id} value={country.id}>
               {country.country}
@@ -54,7 +69,12 @@ export default function SelectMovies({
       </FormControl>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Gengre</InputLabel>
-        <Select>
+        <Select
+          value={genreId}
+          onChange={e => {
+            dispatch(selectQuery({ genreId: e.target.value }));
+          }}
+        >
           {genresList.map(genre => (
             <MenuItem key={genre.id} value={genre.id}>
               {genre.genre}
@@ -64,7 +84,12 @@ export default function SelectMovies({
       </FormControl>
       <FormControl fullWidth size="small">
         <InputLabel id="demo-simple-select-label">Year</InputLabel>
-        <Select>
+        <Select
+          value={year}
+          onChange={e => {
+            dispatch(selectQuery({ year: e.target.value }));
+          }}
+        >
           {yearsList.map(year => (
             <MenuItem key={year.value} value={year.value}>
               {year.title}
@@ -73,7 +98,11 @@ export default function SelectMovies({
         </Select>
       </FormControl>
       <Box>
-        <Button variant="outlined" startIcon={<CloseIcon />}>
+        <Button
+          onClick={() => dispatch(resetQuery())}
+          variant="outlined"
+          startIcon={<CloseIcon />}
+        >
           Clear
         </Button>
       </Box>
