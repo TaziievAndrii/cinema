@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TOP_LISTS } from '../../../constants';
 import { useGetFilmsTopQuery } from '../../../services/kinopoiskApi';
+import ErrorMessage from '../../ui/ErrorMessage';
 import MoviesList from '../../ui/MoviesList';
 
 export default function MoviesListTop() {
@@ -22,7 +23,7 @@ export default function MoviesListTop() {
     setPage(1);
   }, [location]);
 
-  if (error) return <p>Some error</p>;
+  if (error) return <ErrorMessage />;
   if (isLoading) return <p>Loading...</p>;
 
   return (
