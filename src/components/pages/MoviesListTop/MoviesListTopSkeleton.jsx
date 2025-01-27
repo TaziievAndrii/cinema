@@ -1,7 +1,7 @@
 import { Skeleton, Stack } from '@mui/material';
 import React from 'react';
 
-export default function MoviesListSkeleton() {
+export default function MoviesListTopSkeleton() {
   return (
     <>
       <Stack sx={{ mb: 2, mt: 2 }}>
