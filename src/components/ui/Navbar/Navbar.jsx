@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <Slide appear={false} direction="down" in={!trigger}>
       <AppBar>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Toolbar disableGutters>
             <IconButton color="inherit" onClick={handleDrawerToggle}>
               <MenuIcon />
