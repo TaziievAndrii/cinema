@@ -202,13 +202,10 @@ export default function MovieDetail() {
           direction="row"
           sx={{ gap: 2 }}
         >
-          {responseSequelsAndPrequels.data ? (
+          {responseSequelsAndPrequels.data &&
             responseSequelsAndPrequels.data.map(el => (
               <MovieCard reload key={el.filmId} movie={el} />
-            ))
-          ) : (
-            <p>Nothing</p>
-          )}
+            ))}
         </Stack>
       </Stack>
     </>
