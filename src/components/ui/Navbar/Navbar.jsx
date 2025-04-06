@@ -1,3 +1,4 @@
+import { Brightness4, Brightness7 } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
@@ -18,10 +19,11 @@ import {
   Typography,
   useScrollTrigger,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { iconComponents, MOVIE_LISTS, TOP_LISTS } from '../../../constants';
+import { ColorModeContext } from '../../../context/ToggleColorMode';
 import Search from '../Search';
 
 const Icon = ({ iconName }) => {
@@ -31,6 +33,7 @@ const Icon = ({ iconName }) => {
 
 export default function Navbar() {
   const [isOpen, setOpen] = useState(false);
+  const { toggleColorMode, mode } = useContext(ColorModeContext);
 
   const trigger = useScrollTrigger({
     target: window,
@@ -97,6 +100,9 @@ export default function Navbar() {
               </Typography>
               <Search />
             </Stack>
+            <IconButton color="inherit" onClick={toggleColorMode}>
+              {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+            </IconButton>
           </Toolbar>
         </Container>
       </AppBar>
