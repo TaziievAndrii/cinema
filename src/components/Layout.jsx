@@ -8,6 +8,7 @@ import Navbar from './ui/Navbar';
 export default function Layout() {
   return (
     <Container
+      maxWidth="xl"
       fixed
       sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
     >

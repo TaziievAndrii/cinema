@@ -1,3 +1,4 @@
+import { Brightness4, Brightness7 } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
@@ -13,14 +14,17 @@ import {
   ListItemIcon,
   ListItemText,
   Slide,
+  Stack,
   Toolbar,
   Typography,
   useScrollTrigger,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { iconComponents, MOVIE_LISTS, TOP_LISTS } from '../../../constants';
+import { ColorModeContext } from '../../../context/ToggleColorMode';
+import Search from '../Search';
 
 const Icon = ({ iconName }) => {
   const IconComponent = iconComponents[iconName];
@@ -29,6 +33,7 @@ const Icon = ({ iconName }) => {
 
 export default function Navbar() {
   const [isOpen, setOpen] = useState(false);
+  const { toggleColorMode, mode } = useContext(ColorModeContext);
 
   const trigger = useScrollTrigger({
     target: window,
@@ -41,7 +46,7 @@ export default function Navbar() {
   return (
     <Slide appear={false} direction="down" in={!trigger}>
       <AppBar>
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <Toolbar disableGutters>
             <IconButton color="inherit" onClick={handleDrawerToggle}>
               <MenuIcon />
@@ -79,14 +84,25 @@ export default function Navbar() {
                 </List>
               </Box>
             </Drawer>
-            <Typography
-              sx={{ color: 'white', textDecoration: 'none' }}
-              component={RouterLink}
-              variant="h4"
-              to="/"
+            <Stack
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+              width="100%"
             >
-              Betflix
-            </Typography>
+              <Typography
+                sx={{ color: 'white', textDecoration: 'none' }}
+                component={RouterLink}
+                variant="h4"
+                to="/"
+              >
+                Betflix
+              </Typography>
+              <Search />
+            </Stack>
+            <IconButton color="inherit" onClick={toggleColorMode}>
+              {mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+            </IconButton>
           </Toolbar>
         </Container>
       </AppBar>
