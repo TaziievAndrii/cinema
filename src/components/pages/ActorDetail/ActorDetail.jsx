@@ -12,7 +12,7 @@ import React from 'react';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 
 import { useGetStaffByIdQuery } from '../../../services/kinopoiskApi';
-import ErrorMessage from '../../ui/ErrorMessage';
+import ErrorMessage from '../../ui/ErrorMessage/ErrorMessage';
 
 export default function ActorDetail() {
   const { id } = useParams();
@@ -31,14 +31,15 @@ export default function ActorDetail() {
 
   return (
     <>
-      <Grid container spacing={4} pt={1}>
+      <Grid container pt={1} spacing={4}>
         <Grid item xs={12} md={4}>
           <img
             src={data.posterUrl}
+            alt={data.nameEn}
             style={{ width: '100%' }}
-            alt={data.nameRu}
           />
         </Grid>
+
         <Grid item xs={12} md={8}>
           <Stack flexDirection="row">
             <Button
@@ -47,65 +48,68 @@ export default function ActorDetail() {
               color="primary"
             ></Button>
             <Stack flexDirection="column">
-              <Typography variant="h5">{data.nameRu}</Typography>
-              <Typography>{data.nameEn}</Typography>
+              <Typography gutterBottom variant="h5">
+                {data.nameRu}
+              </Typography>
+              <Typography gutterBottom>{data.nameEn}</Typography>
             </Stack>
           </Stack>
           <Typography gutterBottom variant="h5">
-            Об актере
+            About actor
           </Typography>
           <Grid container>
             <Grid item xs={6}>
-              <Typography gutterBottom>Карьера</Typography>
+              <Typography gutterBottom>Carrer</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom>{data.profession}</Typography>
             </Grid>
 
             <Grid item xs={6}>
-              <Typography gutterBottom>Рост</Typography>
+              <Typography gutterBottom>Hight</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom>{data.growth}</Typography>
             </Grid>
 
             <Grid item xs={6}>
-              <Typography gutterBottom>Дата рождения</Typography>
+              <Typography gutterBottom>Date of birth</Typography>
             </Grid>
             <Grid item xs={6}>
               <Typography gutterBottom>
-                {data.birthday} ({data.age} лет)
+                {data.birthday} ({data.age} years)
               </Typography>
             </Grid>
 
             <Grid item xs={6}>
-              <Typography gutterBottom>Всего фильмов</Typography>
+              <Typography gutterBottom>At all movies</Typography>
             </Grid>
             <Grid item xs={6}>
-              <Typography>{data.films.length}</Typography>
+              <Typography gutterBottom>{data.films.length}</Typography>
             </Grid>
 
-            <Grid item xs={6}>
-              <Typography gutterBottom>Факты</Typography>
+            <Grid item xs={12}>
+              <Typography gutterBottom>Facts</Typography>
             </Grid>
             <Grid item xs={12}>
               {data.facts.map((fact, index) => (
-                <Typography gutterBottom key={fact}>
-                  {index + 1}.{fact}
+                <Typography gutterBottom key={index}>
+                  {++index}. {fact}
                 </Typography>
               ))}
             </Grid>
           </Grid>
         </Grid>
+
         <Grid item xs={12}>
-          <Typography variant="h5">Фильмы</Typography>
+          <Typography gutterBottom>Movies</Typography>
         </Grid>
       </Grid>
       <Stack>
         {data.films
           .filter(
             (item, index, self) =>
-              index === self.findIndex(el => el.filmId === item.filmId),
+              (index = self.findIndex(el => el.filmId === item.filmId)),
           )
           .map((film, index) => (
             <Stack
@@ -113,11 +117,11 @@ export default function ActorDetail() {
               flexDirection="row"
               justifyContent="space-between"
             >
-              <Typography>{index + 1}</Typography>
+              <Typography gutterBottom>{++index}</Typography>
               <Link component={RouterLink} to={`/movie/${film.filmId}`}>
-                {film.nameRu ? film.nameRu : film.nameEn}
+                {film.nameEn ? film.nameEn : film.nameRu}
               </Link>
-              <Typography>{film.rating ? film.rating : '-'}</Typography>
+              <Typography gutterBottom>{film.rating}</Typography>
             </Stack>
           ))}
       </Stack>

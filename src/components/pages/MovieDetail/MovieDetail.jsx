@@ -153,14 +153,15 @@ export default function MovieDetail() {
             .filter(el => el.professionKey === 'ACTOR')
             .slice(0, 10)
             .map(staff => (
-              <Link
-                key={staff.staffId}
-                component={ReactRouter}
-                to={`/actor/${staff.staffId}`}
-                gutterBottom
-              >
-                {staff.nameEn}
-              </Link>
+              <div key={staff.staffId}>
+                <Link
+                  component={ReactRouter}
+                  to={`/actor/${staff.staffId}`}
+                  gutterBottom
+                >
+                  {staff.nameEn}
+                </Link>
+              </div>
             ))}
         </Grid>
       </Grid>
